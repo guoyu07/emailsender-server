@@ -1,0 +1,7 @@
+{
+    "require": {
+        "catfan/medoo": "dev-master"
+        , "phpmailer/phpmailer" : "dev-master"
+    },
+    "minimum-stability": "stable"
+}
