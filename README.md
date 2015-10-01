@@ -48,7 +48,7 @@ password      = root
 database_name = mail
 
 [test : common]
-[product : common] > application/config/database.ini
+[product : common]' > application/config/database.ini
 # create mail config file.
 echo '[common]
 server.log_file        = /tmp/output.log
@@ -73,3 +73,29 @@ phpmail.wordwrap   = 100
 [test : common]
 [product : common]' > application/config/mail.ini
 ```
+
+Usage
+-----------
+### start server.
+```
+./server.sh start
+```
+
+### telnet
+
+协议采用空格或者制表符做分隔，命令格式：CMD ARG1 ARG2 ARG3 ...
+
+注：若ARG存在空格，需要通过 rawurlencode
+
+```
+[lancer@Lancer-MacBookPro ~]$ telnet 127.0.0.1 8001
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+send subject emailbody user1@example.com;user2@examle.com user3@example.com
+0
+```
+
+上例发送主题：subject，主体内容：emailbody，发送邮件：user1;user2，抄送：user3
+
+返回 0 表示成功，大于 0 表示错误，message 通过协议方式追加状态码后。
