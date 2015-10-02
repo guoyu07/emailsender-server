@@ -21,7 +21,7 @@ class Parse {
     }
 
     protected function _parse() {
-        $this->_args = preg_split("/[\s]+/", $this->_packet);
+        $this->_args = preg_split("/[\s]+/", substr($this->_packet, 0, -4) );
         $this->_cmd  = array_shift($this->_args);
     }
 

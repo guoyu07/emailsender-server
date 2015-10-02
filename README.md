@@ -99,3 +99,36 @@ send subject emailbody user1@example.com;user2@examle.com user3@example.com
 上例发送主题：subject，主体内容：emailbody，发送邮件：user1;user2，抄送：user3
 
 返回 0 表示成功，大于 0 表示错误，message 通过协议方式追加状态码后。
+
+### use php in client
+
+```php
+class Util_Mail {
+
+    public static function send($subject, $body, $to, $cc='') {
+        $client = new swoole_client(SWOOLE_SOCK_TCP | SWOOLE_KEEP);
+        $client->set(['open_eof_check' => true, 'package_eof' => "\r\n"]);
+        if ( ! $client->connect('127.0.0.1', 8001))
+            return false;
+        $to = is_array($to) ? implode(";", $to) : $to;
+        $cc = is_array($cc) ? implode(";", $cc) : $cc;
+        $packet = sprintf("send %s %s %s %s\r\n", 
+            rawurlencode($subject),
+            rawurlencode($body),
+            rawurlencode($to),
+            rawurlencode($cc)
+        );
+        if ( ! $client->send( $packet ) )
+            return false;
+
+        $response = preg_split("/[\s]+/", substr($client->recv(), 0, -4) );
+        $client->close();
+        return $response;
+    }
+}
+
+Util_Mail::send("subject", "body", "user1@example.com");
+Util_Mail::send("subject", "body", ["user1@example.com", "user2@example.com"]);
+Util_Mail::send("subject", "body", ["user1@example.com", "user2@example.com"], "user3@example.com");
+Util_Mail::send("subject", "body", ["user1@example.com", "user2@example.com"], ["user3@example.com", "user4@example.com"]);
+```

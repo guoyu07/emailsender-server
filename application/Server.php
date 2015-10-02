@@ -14,11 +14,13 @@ define('APPLICATION_NOT_RUN', true);
 class Server {
 
     public function console($output) {
-        echo sprintf("[%s]\t%s", date('Y-m-d H:i:s'), $output ) . PHP_EOL;
+        echo sprintf("[%s]\t%s\r\n", date('Y-m-d H:i:s'), $output );
     }
 
     public function response($code, $message) {
-        return sprintf("%d %s", $code, rawurlencode( $message ) ) . PHP_EOL;
+        $response = sprintf("%d %s\r\n", $code, rawurlencode( $message ) );
+        $this->console("response: " . $response);
+        return $response;
     }
 
     public function __construct(){
@@ -39,6 +41,7 @@ class Server {
         ]);
 
         $server->on('Start',   [$this, 'onStart']);
+        $server->on('Close',   [$this, 'onClose']);
         $server->on('Connect', [$this, 'onConnect']);
         $server->on('Receive', [$this, 'onReceive']);
         $server->on('Task',    [$this, 'onTask']);
