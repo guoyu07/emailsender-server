@@ -37,7 +37,7 @@ class Server {
             'package_eof'     => "\r\n", //设置EOF
             'user'            => $config->user,
             'group'           => $config->group,
-            'debug_mode'      => 1,
+            // 'debug_mode'      => 1,
         ]);
 
         $server->on('Start',   [$this, 'onStart']);

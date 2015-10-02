@@ -121,7 +121,7 @@ class Util_Mail {
         if ( ! $client->send( $packet ) )
             return false;
 
-        $response = preg_split("/[\s]+/", substr($client->recv(), 0, -4) );
+        $response = preg_split("/[\s]+/", substr($client->recv(), 0, -2) );
         $client->close();
         return $response;
     }
