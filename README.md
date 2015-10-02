@@ -86,7 +86,7 @@ Usage
 协议采用空格或者制表符做分隔  
 命令格式：CMD ARG1 ARG2 ARG3 ...  
 返回格式：CODE RESPONSE  
-注：若ARG/RESPONSE存在空格，需要通过 rawurlencode
+注：若 `ARG` / `RESPONSE` 存在空格，需要通过 `rawurlencode` / `rawurldecode` 进行转化
 
 ```
 [lancer@Lancer-MacBookPro ~]$ telnet 127.0.0.1 8001
@@ -98,8 +98,8 @@ send subject emailbody user1@example.com;user2@examle.com user3@example.com
 ```
 
 上例发送主题：subject，主体内容：emailbody，发送邮件：user1;user2，抄送：user3  
-CODE=0表示成功，129表示Email Id，可以通过 `status 129` 查询邮件是否异步发送完成  
-CODE>0表示失败，message 通过协议方式追加状态码后。
+`CODE=0` 表示成功，129表示Email Id，可以通过 `status 129` 查询邮件是否异步发送完成  
+`CODE>0` 表示失败，message 通过协议方式追加状态码后。
 
 ### use php in client
 
