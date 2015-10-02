@@ -8,6 +8,8 @@
 namespace Service\Entity;
 
 use Core\Model\Medoo;
+use Library\Util\Validate;
+use Core\Exception\RequestValidateException;
 
 class Mail {
 
@@ -30,11 +32,25 @@ class Mail {
     }
 
     public function setTo($to) {
-        $this->to = explode(";", $to);
+        $to = explode(";", $to);
+        foreach ($to as $address) {
+            if ( ! Validate::isEmailAddr($address) )
+                throw new RequestValidateException("Send to email address is not valid.");
+        }
+        $this->to = $to;
     }
 
     public function setCc($cc) {
-        $this->cc = explode(";", $cc);
+        if ( ! $cc ) {
+            $this->cc = [];
+            return;
+        }
+        $cc = explode(";", $cc);
+        foreach ($cc as $address) {
+            if ( ! Validate::isEmailAddr($address) )
+                throw new RequestValidateException("Copy send to email address is not valid.");
+        }
+        $this->cc = $cc;
     }
 
     public function create() {
@@ -56,6 +72,7 @@ class Mail {
     }
 
     public function send() {
+        // return 1;
         $config = \Yaf_Registry::get('config')->phpmail;
         $Mail = new \PHPMailer();
         $Mail->isSMTP();

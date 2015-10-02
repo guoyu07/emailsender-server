@@ -24,11 +24,11 @@ class CommandSend implements CommandInterface {
 
     public function validate() {
         if ( ! $this->_packet['subject'] )
-            throw new RequestValidateException('Field subject is emptyn');
+            throw new RequestValidateException('Field subject is empty.');
         if ( ! $this->_packet['body'] )
-            throw new RequestValidateException('Field body is emptyn');
+            throw new RequestValidateException('Field body is empty.');
         if ( ! $this->_packet['to'] )
-            throw new RequestValidateException('Field to is emptyn');
+            throw new RequestValidateException('Field to is empty.');
     }
 
     public function process(\swoole_server $server) {
@@ -39,6 +39,6 @@ class CommandSend implements CommandInterface {
         $Mail->setCc(rawurldecode($this->_packet['cc']));
         $Mail->create();
         TaskCreator::create($server, 'SendMail', $Mail);
-        return null;
+        return $Mail->id;
     }
 }

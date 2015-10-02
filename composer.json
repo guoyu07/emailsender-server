@@ -1,7 +1,8 @@
 {
     "require": {
-        "catfan/medoo": "dev-master"
-        , "phpmailer/phpmailer" : "dev-master"
+        "lancerhe/php-library" : "1.0.1"
+        , "catfan/medoo": "0.9.8"
+        , "phpmailer/phpmailer" : "5.2.13"
     },
     "minimum-stability": "stable"
 }
