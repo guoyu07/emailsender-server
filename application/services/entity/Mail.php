@@ -10,6 +10,7 @@ namespace Service\Entity;
 use Core\Model\Medoo;
 use Library\Util\Validate;
 use Core\Exception\RequestValidateException;
+use Core\Exception\ResourceNotFoundException;
 
 class Mail {
 
@@ -22,6 +23,8 @@ class Mail {
     public $cc;
 
     public $id;
+
+    public $status;
 
     public function setSubject($subject) {
         $this->subject = trim($subject);
@@ -51,6 +54,19 @@ class Mail {
                 throw new RequestValidateException("Copy send to email address is not valid.");
         }
         $this->cc = $cc;
+    }
+
+    public function query($id) {
+        $rows = ( new Medoo() )->medoo()->select('mail', '*', ['id' => $id]);
+        if ( empty($rows) ) 
+            throw new ResourceNotFoundException("Email not found");
+        $row = $rows[0];
+        $this->id      = $row['id'];
+        $this->subject = $row['subject'];
+        $this->body    = $row['body'];
+        $this->to      = json_decode($row['to'], true);
+        $this->cc      = json_decode($row['cc'], true);
+        $this->status  = $row['status'];
     }
 
     public function create() {

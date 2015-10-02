@@ -9,6 +9,8 @@ namespace Service\Packet;
 
 interface CommandInterface {
 
+    public function __construct($args);
+
     public function validate();
 
     public function process(\swoole_server $server);

@@ -1,6 +1,6 @@
 <?php
 /**
- * TCP Packet Processor
+ * Send E-Mail 发送Email
  * @author Lancer He <lancer.he@gmail.com>
  * @since  2015-09-28
  */
