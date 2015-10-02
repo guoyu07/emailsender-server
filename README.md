@@ -83,10 +83,10 @@ Usage
 
 ### telnet
 
-协议采用空格或者制表符做分隔，命令格式：CMD ARG1 ARG2 ARG3 ...
-返回格式：CODE RESPONSE
-
-注：若ARG存在空格，需要通过 rawurlencode
+协议采用空格或者制表符做分隔  
+命令格式：CMD ARG1 ARG2 ARG3 ...  
+返回格式：CODE RESPONSE  
+注：若ARG/RESPONSE存在空格，需要通过 rawurlencode
 
 ```
 [lancer@Lancer-MacBookPro ~]$ telnet 127.0.0.1 8001
