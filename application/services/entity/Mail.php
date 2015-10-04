@@ -88,7 +88,7 @@ class Mail {
     }
 
     public function send() {
-        // return 1;
+        //return 1;
         $config = \Yaf_Registry::get('config')->phpmail;
         $Mail = new \PHPMailer();
         $Mail->isSMTP();

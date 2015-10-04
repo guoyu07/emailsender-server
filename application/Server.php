@@ -34,6 +34,7 @@ class Server {
             'max_request'     => $config->max_request,
             'dispatch_mode'   => 2,
             'open_eof_check'  => true, //打开EOF检测
+            'open_eof_split'  => true,
             'package_eof'     => "\r\n", //设置EOF
             'user'            => $config->user,
             'group'           => $config->group,
