@@ -17,14 +17,10 @@ class Medoo {
 
     protected $_table = "";
 
-    public function medoo() {
-        if ( ! is_null( self::$Medoo ) ) {
-            return self::$Medoo;
-        }
-
+    protected function _create() {
         $config = (new \Yaf_Config_Ini( APPLICATION_CONFIG_PATH . '/database.ini', YAF_ENVIRON));
 
-        self::$Medoo = new \Medoo(array(
+        return new \Medoo(array(
             'database_type' => $config->database_type,
             'database_name' => $config->database_name,
             'server'        => $config->server,
@@ -33,6 +29,16 @@ class Medoo {
             'port'          => $config->port,
             'charset'       => $config->charset,
         ));
+    }
+
+    public function medoo($singleton=true) {
+        if ( ! $singleton ) 
+            return $this->_create();
+
+        if ( ! is_null( self::$Medoo ) ) {
+            return self::$Medoo;
+        }
+        self::$Medoo = $this->_create();
         return self::$Medoo;
     }
     

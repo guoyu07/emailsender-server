@@ -57,7 +57,7 @@ class Mail {
     }
 
     public function query($id) {
-        $rows = ( new Medoo() )->medoo()->select('mail', '*', ['id' => $id]);
+        $rows = ( new Medoo() )->medoo(false)->select('mail', '*', ['id' => $id]);
         if ( empty($rows) ) 
             throw new ResourceNotFoundException("Email not found");
         $row = $rows[0];
@@ -70,7 +70,7 @@ class Mail {
     }
 
     public function create() {
-        $this->id = ( new Medoo() )->medoo()->insert('mail', [
+        $this->id = ( new Medoo() )->medoo(false)->insert('mail', [
             'subject' => $this->subject,
             'body'    => $this->body,
             'to'      => json_encode($this->to),
@@ -80,11 +80,11 @@ class Mail {
     }
 
     public function complete() {
-        return ( new Medoo() )->medoo()->update('mail', ['status' => 3, 'ftime' => time()], ['id' => $this->id]);
+        return ( new Medoo() )->medoo(false)->update('mail', ['status' => 3, 'ftime' => time()], ['id' => $this->id]);
     }
 
     public function pending() {
-        return ( new Medoo() )->medoo()->update('mail', ['status' => 2], ['id' => $this->id]);
+        return ( new Medoo() )->medoo(false)->update('mail', ['status' => 2], ['id' => $this->id]);
     }
 
     public function send() {
